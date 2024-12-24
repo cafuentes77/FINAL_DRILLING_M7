@@ -6,7 +6,6 @@ export const serverInit = async (app, PORT) => {
         await dbConnect()
 
 
-
         app.listen (PORT, () => {
             console.log(`Server is running on port ${PORT} ⚡🎆`);
         })
