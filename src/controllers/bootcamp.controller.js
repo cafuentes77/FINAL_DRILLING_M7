@@ -20,13 +20,13 @@ export const createBootcamp = async (req, res) => {
 
 export const addUser = async (req, res) => {
     try {
-        const { bootcampId, userId } = req.body;  // Se reciben los IDs de bootcamp y usuario
+        const { bootcampId, userId } = req.body;  
         const bootcamps = await Bootcamp.findByPk(bootcampId, {
             attributes: ['id', 'title']
-        });  // Buscar el bootcamp por su ID
+        });  
         const users = await User.findByPk(userId, {
             attributes: ['id', 'firstName', 'lastName']
-        });  // Buscar el usuario por su ID
+        });  
 
         if (!bootcamps || !users) {
             return res.status(404).json({
@@ -36,8 +36,8 @@ export const addUser = async (req, res) => {
             });
         }
 
-        // Asociar el usuario al bootcamp
-        await bootcamps.addUser(users);  // Utilizando la asociación definida anteriormente
+        
+        await bootcamps.addUser(users);  
 
         res.status(200).json({
             message: 'Usuario agregado al Bootcamp con éxito',
@@ -71,15 +71,15 @@ export const findById = async (req, res) => {
 
 export const findAll = async (req, res) => {
     try {
-        // Obtener todos los usuarios con sus bootcamps asociados
+        
         const users = await User.findAll({
-            attributes: ["id", "firstName", "lastName", "email"], // Seleccionamos los campos de usuario que necesitamos
+            attributes: ["id", "firstName", "lastName", "email"], 
             include: {
-                model: Bootcamp, // Incluir los bootcamps asociados
-                as: "bootcamps", // El alias que hemos definido en las asociaciones
-                attributes: ["id", "title"], // Seleccionamos los campos que queremos del bootcamp
+                model: Bootcamp, 
+                as: "bootcamps", 
+                attributes: ["id", "title"], 
                 through: {
-                    attributes: [], // Excluir los campos de la tabla intermedia (createdAt, updatedAt)
+                    attributes: [], 
                 },
             },
         });
@@ -95,7 +95,7 @@ export const findAll = async (req, res) => {
         res.status(200).json({
             message: "Usuarios obtenidos con éxito",
             status: 200,
-            data: users, // Esto contiene una lista de usuarios con sus bootcamps
+            data: users, 
         });
     } catch (error) {
         console.error(error);
