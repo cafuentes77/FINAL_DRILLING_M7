@@ -42,7 +42,8 @@ export const initBootcamp = (dbConfig) => {
         sequelize: dbConfig,
         modelName: 'Bootcamp',
         tableName: 'bootcamps',
-        timestamps: true
+        timestamps: true,
+        paranoid: true
     }
 );
 }

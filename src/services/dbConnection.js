@@ -1,15 +1,16 @@
 import { dbConfig } from "../config/db.config.js"
-import { initBootcamp } from "../models/Bootcamp.model.js";
-import { initUser } from "../models/User.model.js";
+
+import { setupAssociation } from "../utils/db/setupAssociation.js";
+import { initModels } from "../utils/db/initModels.js";
 
 
 
 export const dbConnect = async() => {
     try {
         await dbConfig.authenticate();
-        initUser(dbConfig);
-        initBootcamp(dbConfig);
-        await dbConfig.sync();
+        initModels(dbConfig);
+        setupAssociation();
+        await dbConfig.sync({alter: true});
 
         console.log('Logramos conectarnos a Postgre a traves de Sequelize 🚀')
     } catch (error) {
